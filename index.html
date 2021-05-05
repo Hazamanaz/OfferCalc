@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Offer Calculator</title>
+    
+</head> 
+<body>
+<div class="page">
+    <div class="row">
+        <p>Asking Price</p>
+        <input type="number" id="asking"/>
+    </div>
+
+    <div class="row">
+        <p>First Offer</p>
+        <input type="text"id="first" readonly/>
+    </div>
+
+    <div class="row">
+        <p>Best Offer</p>
+        <input type="text" id="best" readonly/>
+        </div>
+</div> 
+<script>
+
+
+$( document ).ready( function(){
+
+    function DoCalc(){
+
+        var asking = $('#asking').val();
+
+        asking = asking.replace(/[^0-9]*/g, '');
+
+        var first = WeirdRounding((asking * 1.03) * 0.90);
+
+        var best = WeirdRounding((asking * 1.03) * 0.95);
+
+        
+        $('#asking').val(asking);
+        $('#first').val(first);
+        $('#best').val(best);
+
+    }
+
+    function WeirdRounding (number){
+
+        number = Math.floor(number).toString();
+
+        var numbers = number.split(''); 
+
+        var obj = {
+            '012': '0',
+            '345': '5',
+            '678': '8',
+            '9': '9'
+        };
+
+        $.each(obj, function(i,x){
+            if ( i.includes(numbers[numbers.length -1]) ){
+                numbers[numbers.length -1] = x;
+            }        
+        });
+
+
+        return numbers.join('');
+    }
+
+    $('#asking').keyup(function(){ DoCalc(); });
+    DoCalc();
+
+});
+
+
+</script>
+<style>
+
+.row {
+
+    text-align: center;
+
+}
+
+p{ 
+    font-size : 21pt;
+}
+
+input, select {
+  width: 50%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 21pt;
+  -moz-appearance: textfield;
+}
+</style>
+</body>
+</html>    
