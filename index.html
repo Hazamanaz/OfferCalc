@@ -45,9 +45,13 @@
             <tr>
                 <th>----------------------------------</td>
             </tr>
-            <tr id="equivHousePriceCont">
-                <th>Equivalent House Price</td>
+            <tr class="equivHousePriceCont">
+                <th>House equivalent (family)</td>
                 <td>£<a class="text"id="equivHousePrice"></a></td>
+            </tr>
+            <tr class="equivHousePriceCont">
+                <th>House equivalent (mortgage)</td>
+                <td>£<a class="text"id="equivHousePriceMort"></a></td>
             </tr>
         </table> 
     </div>
@@ -90,6 +94,7 @@ function DoCalc(){
         var mortMonthly = parseFloat(MonthlyPaymentCalc((best) - 100000, mortInterest));
      
         var equivHousePrice = ReversePaymentCalc((cashMonthly + charges), cashInterest) + 100000;
+        var equivHousePriceMort = ReversePaymentCalc((mortMonthly + charges), mortInterest) + 100000;
 
         $('#asking').html(asking);
         $('#first').html(FormatThousands(first));
@@ -98,7 +103,8 @@ function DoCalc(){
         $('#cashMonthly').html(Math.round(cashMonthly));     
         $('#mortMonthly').html(Math.round(mortMonthly));   
 
-        $('#equivHousePrice').html(FormatThousands(equivHousePrice));         
+        $('#equivHousePrice').html(FormatThousands(equivHousePrice));    
+        $('#equivHousePriceMort').html(FormatThousands(equivHousePriceMort));        
 
     }
     else{
@@ -106,10 +112,10 @@ function DoCalc(){
     }
 
     if ( charges && charges > 0 ){
-        $("#equivHousePriceCont").show();        
+        $(".equivHousePriceCont").show();        
     }
     else{
-        $("#equivHousePriceCont").hide();
+        $(".equivHousePriceCont").hide();
     }
 
 }
