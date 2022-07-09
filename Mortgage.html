@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="UTF-8">
+    <link rel="icon" href="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Offer Calculator</title>
+    
+</head> 
+<body>
+<div class="page">
+    <div class="row">
+        <p>Estimated Value</p>
+        <p><input type="number" id="asking"/>,000</p>
+    </div>
+    <div class="row">
+        <p>Monthly Lease Charges</p>
+        <input type="number" id="monthlylease"/>
+    </div>
+
+
+    <div class="section" hidden>
+        <table>
+            <tr>
+                <th>First Offer</td>
+                <td>£<a class="text"id="first"></a></td>
+            </tr>
+            <tr>
+                <th>Second Offer</td>
+                <td>£<a class="text"id="best"></a></td>
+            </tr>
+            <tr>
+                <th>----------------------------------</td>
+            </tr>
+            <tr>
+                <th>Family Monthly Payment</td>
+                <td>£<a class="text"id="cashMonthly"></a></td>
+            </tr>
+            <tr>
+                <th>Mortgage Monthly Payment</td>
+                <td>£<a class="text"id="mortMonthly"></a></td>
+            </tr>
+            <tr>
+                <th>----------------------------------</td>
+            </tr>
+            <tr id="equivHousePriceCont">
+                <th>Equivalent House Price</td>
+                <td>£<a class="text"id="equivHousePrice"></a></td>
+            </tr>
+        </table> 
+    </div>
+</div> 
+
+
+<script src="Mortgage.js"></script>
+
+<style>
+
+td{
+    text-align: right;
+}
+
+th{
+    text-align: left;
+}
+
+table{
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 21pt;
+}
+
+.row {
+
+    text-align: center;
+
+}
+
+.text{
+    width: 100%;
+    text-align: right
+}
+
+.section{
+    text-align: center;
+}
+
+.row2{
+    text-align: left;
+}
+
+
+p{ 
+    font-size : 21pt;
+}
+
+input, select {
+  width: 30%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 21pt;
+  -moz-appearance: textfield;
+}
+</style>
+</body>
+</html>    
