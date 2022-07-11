@@ -24,35 +24,56 @@
     <div class="section" hidden>
         <table>
             <tr>
-                <th>First Offer</td>
+                <th>First Offer</th>
                 <td>£<a class="text"id="first"></a></td>
             </tr>
             <tr>
-                <th>Second Offer</td>
+                <th>Second Offer</th>
                 <td>£<a class="text"id="best"></a></td>
             </tr>
             <tr>
-                <th>----------------------------------</td>
+                <th>----------------------------------</th>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <th></th>
+                <th class="text">Interest</th>
+                <th class="text">Mortgage</th>
             </tr>
             <tr>
-                <th>Family Monthly Payment</td>
+                <th class="rowLeft">Family</th>
+                <td>£<a class="text"id="cashInterest"></a></td>
                 <td>£<a class="text"id="cashMonthly"></a></td>
             </tr>
             <tr>
-                <th>Mortgage Monthly Payment</td>
+                <th class="rowLeft">Bank</th>
+                <td>£<a class="text"id="mortInterest"></a></td>
                 <td>£<a class="text"id="mortMonthly"></a></td>
             </tr>
+
             <tr>
-                <th>----------------------------------</td>
+                <th></th>
+                <th class="text equivHousePriceCont">Total Monthly</th>
+                <th class="text equivHousePriceCont">House equivalent</th>
+            </tr>
+            <tr>
+                <th class="rowLeft">Family</th>
+                <td class="equivHousePriceCont">£<a class="text"id="cashMonthlyLease"></a></td>
+                <td class="equivHousePriceCont">£<a class="text"id="equivHousePrice"></a></td>
+            </tr>
+            <tr>
+                <th class="rowLeft">Bank</th>
+                <td class="equivHousePriceCont">£<a class="text"id="mortMonthlyLease"></a></td>
+                <td class="equivHousePriceCont">£<a class="text"id="equivHousePriceMort"></a></td>
+            </tr>
+            <!-- <tr class="equivHousePriceCont">
+                <th>House equivalent (family)</th>
             </tr>
             <tr class="equivHousePriceCont">
-                <th>House equivalent (family)</td>
-                <td>£<a class="text"id="equivHousePrice"></a></td>
-            </tr>
-            <tr class="equivHousePriceCont">
-                <th>House equivalent (mortgage)</td>
-                <td>£<a class="text"id="equivHousePriceMort"></a></td>
-            </tr>
+                <th>House equivalent (mortgage)</th>
+            </tr> -->
+
         </table> 
     </div>
 </div> 
@@ -60,8 +81,8 @@
 
 <script>
 
-var cashInterest = 0.05;
-var mortInterest = 0.035;
+var cashInterestPerc = 0.05;
+var mortInterestPerc = 0.035;
 
 
 $( document ).ready( function(){
@@ -89,19 +110,30 @@ function DoCalc(){
 
         var best = WeirdRounding((asking * 1.03) * 0.95) * 1000;
 
-        var cashMonthly = parseFloat(MonthlyPaymentCalc((best) - 100000, cashInterest));
+        var cashInterest = parseFloat(((best - 100000) * cashInterestPerc) / 12);
+        var mortInterest = parseFloat(((best - 100000) * mortInterestPerc) / 12 );
+
+        var cashMonthly = parseFloat(MonthlyPaymentCalc((best) - 100000, cashInterestPerc));
+        var mortMonthly = parseFloat(MonthlyPaymentCalc((best) - 100000, mortInterestPerc));
+        
+        var cashMonthlyLease = cashMonthly + charges;
+        var mortMonthlyLease = mortMonthly + charges;
      
-        var mortMonthly = parseFloat(MonthlyPaymentCalc((best) - 100000, mortInterest));
-     
-        var equivHousePrice = ReversePaymentCalc((cashMonthly + charges), cashInterest) + 100000;
-        var equivHousePriceMort = ReversePaymentCalc((mortMonthly + charges), mortInterest) + 100000;
+        var equivHousePrice = ReversePaymentCalc((cashMonthly + charges), cashInterestPerc) + 100000;
+        var equivHousePriceMort = ReversePaymentCalc((mortMonthly + charges), mortInterestPerc) + 100000;
 
         $('#asking').html(asking);
         $('#first').html(FormatThousands(first));
         $('#best').html(FormatThousands(best));
 
+        $('#cashInterest').html(Math.round(cashInterest));     
+        $('#mortInterest').html(Math.round(mortInterest));   
+        
         $('#cashMonthly').html(Math.round(cashMonthly));     
         $('#mortMonthly').html(Math.round(mortMonthly));   
+
+        $('#cashMonthlyLease').html(Math.round(cashMonthlyLease));     
+        $('#mortMonthlyLease').html(Math.round(mortMonthlyLease));   
 
         $('#equivHousePrice').html(FormatThousands(equivHousePrice));    
         $('#equivHousePriceMort').html(FormatThousands(equivHousePriceMort));        
@@ -194,6 +226,10 @@ function WeirdRounding (number){
 
 td{
     text-align: right;
+}
+
+.rowLeft{
+    max-width: 10%;
 }
 
 th{
